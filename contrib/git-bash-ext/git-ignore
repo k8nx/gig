@@ -1,0 +1,53 @@
+#!/bin/sh
+DIR=`dirname $0`
+
+info() {
+  echo "\033[0;33m$@\033[0m"
+}
+
+error() {
+  echo "\033[0;31m$@\033[0m"
+}
+
+usage() {
+  info "usage: git ignore <subcommand>"
+  echo
+  echo "Available subcommands are:"
+  echo "          init - initialize .gitignore"
+  echo "          update - update git ignore extension"
+  echo "          add <patten> - append ignore pattern to .gitignore"
+  echo "          apply <template name> - apply template to .gitignore"
+  echo
+  echo "git ignore <subcommand> help"
+}
+
+invoke() {
+  if [ $# -lt 1 ]; then
+    usage
+    exit 1
+  fi
+
+  . "$DIR/git-ignore-env"
+
+  COMMAND="$1"; shift
+  ACTION="default"
+
+  if [ ! -e "$DIR/git-ignore-$COMMAND" ]; then
+    usage
+    exit 1
+  fi
+
+  . "$DIR/git-ignore-$COMMAND"
+  if [ "$1" != "" ] && { ! echo "$1" | grep -q "^-"; } then
+    ACTION="$1"; shift
+  fi
+  if ! type "cmd_$ACTION" >/dev/null 2>&1; then
+    error "Unknown action: '$ACTION'"
+    usage
+    exit 1
+  fi
+
+  cmd_$ACTION "$@"
+}
+
+invoke "$@"
