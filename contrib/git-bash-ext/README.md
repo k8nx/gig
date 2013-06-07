@@ -89,3 +89,12 @@ lib_managed/
 src_managed/
 ```
 
+### git ignore init / git ign init
+
+git ignore init = remove .gitignore
+git ignore init Yii = remove .gitignore + git ignore apply Yii
+
+```shell
+$ git ignore init
+```
+

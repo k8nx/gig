@@ -6,7 +6,7 @@ cmd_default() {
   for name in `find $GIG_HOME/gitignore -name '*.gitignore'`; do
     cnt=`expr $cnt + 1`
     name="$(basename $name | cut -d'.' -f1)"
-    if [ "0$keyword" != "0" ] && { echo $name | grep -q $keyword; } then
+    if [ "0$keyword" != "0" ] && { echo $name | grep -q -i $keyword; } then
       name="$(info $name)"
     fi
     NAMES="$NAMES  $name"

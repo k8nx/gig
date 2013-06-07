@@ -22,7 +22,7 @@ usage() {
   echo
   echo "git ignore <subcommand> help"
   echo
-  echo "Distributed under MIT License. Written by Daegeun Kim - @GeekDani"
+  echo "Distributed under MIT License. Written by Daegeun Kim - http://bit.ly/dgkim84"
   echo
 }
 

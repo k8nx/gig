@@ -1,2 +1,12 @@
 #!/bin/bash
+export GIG_INSTALL_PREFIX=${INSTALL_PREFIX-"/usr/local/bin"}
 export GIG_HOME=${GIG_HOME-"/usr/local/lib/gig"}
+
+MAINFILES="git-ignore git-ign"
+SCRIPTS=("git-ignore-env" \
+  "git-ignore-init" \
+  "git-ignore-list" \
+  "git-ignore-apply" \
+  "git-ignore-add" \
+  "git-ignore-update" \
+)

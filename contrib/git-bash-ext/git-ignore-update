@@ -1,10 +1,22 @@
 #!/bin/bash
 
 cmd_default() {
-  cd $GIG_HOME && git fetch --all && git reset origin/master
-  if [ "$?" == "0" ]; then
+  cd $GIG_HOME && git fetch --all && git reset --hard origin/master > /dev/null
+  cd $GIG_HOME && git submodule init && git submodule update
+
+  install -v -d -m 0755 "$GIG_INSTALL_PREFIX" > /dev/null
+  for FILE in $MAINFILES; do
+    install -v -b -m 0755 "$GIG_HOME/contrib/git-bash-ext/$FILE" "$GIG_INSTALL_PREFIX" > /dev/null
+  done
+  for SCRIPT in ${SCRIPTS[@]}; do
+    install -v -b -m 0644 "$GIG_HOME/contrib/git-bash-ext/$SCRIPT" "$GIG_INSTALL_PREFIX" > /dev/null
+  done
+
+  echo
+  if [ -f `which git-ignore` ]; then
     info "Update Successful"
   else
-    erorr "Update Error"
+    erorr "Update Error - https://github.com/insanehong/gig"
+    echo "git-ignore not found"
   fi
 }
